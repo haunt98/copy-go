@@ -1,6 +1,7 @@
 package copy
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -8,9 +9,13 @@ import (
 	"path/filepath"
 )
 
+// Ignore not exist error
 func CopyFile(from, to string) error {
 	fromFile, err := os.Open(from)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil
+		}
 		return fmt.Errorf("failed to open %s: %w", from, err)
 	}
 	defer fromFile.Close()
@@ -34,6 +39,7 @@ func CopyFile(from, to string) error {
 	return nil
 }
 
+// Ignore not exist error
 func CopyDir(from, to string) error {
 	if err := os.MkdirAll(to, os.ModePerm); err != nil {
 		return fmt.Errorf("failed to mkdir %s: %w", to, err)
@@ -41,6 +47,9 @@ func CopyDir(from, to string) error {
 
 	fileInfos, err := ioutil.ReadDir(from)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil
+		}
 		return fmt.Errorf("failed to read dir %s: %w", from, err)
 	}
 
