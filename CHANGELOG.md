@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v0.3.0 (2021-1-18)
+
+### Added
+
+- feat: ignore not exist error
+
+### Others
+
+- chore(changelog): generate v0.2.0
+
 ## v0.2.0 (2021-1-18)
 
 ### Added
