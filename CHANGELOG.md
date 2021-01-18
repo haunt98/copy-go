@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v0.2.0 (2021-1-18)
+
+### Added
+
+- feat: make sure nested dir is exist before copying file
+
+### Others
+
+- chore(readme): correct title
+
+- chore(changelog): generate v0.1.0
+
 ## v0.1.0 (2021-1-18)
 
 ### Added
