@@ -43,11 +43,15 @@ func CopyDir(from, to string) error {
 		newTo := filepath.Join(to, fileInfo.Name())
 
 		if fileInfo.IsDir() {
-			CopyDir(newFrom, newTo)
+			if err := CopyDir(newFrom, newTo); err != nil {
+				return err
+			}
 			continue
 		}
 
-		CopyFile(newFrom, newTo)
+		if err := CopyFile(newFrom, newTo); err != nil {
+			return err
+		}
 	}
 
 	return nil
