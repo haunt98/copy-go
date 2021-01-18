@@ -15,6 +15,12 @@ func CopyFile(from, to string) error {
 	}
 	defer fromFile.Close()
 
+	// Make sure nested dir is exist before copying file
+	toDir := filepath.Dir(to)
+	if err := os.MkdirAll(toDir, os.ModePerm); err != nil {
+		return fmt.Errorf("failed to mkdir %s: %w", toDir, err)
+	}
+
 	toFile, err := os.Create(to)
 	if err != nil {
 		return fmt.Errorf("failed to create %s: %w", to, err)
