@@ -8,65 +8,66 @@ import (
 	"path/filepath"
 )
 
+// Copy file from src (source) -> to dst (destination)
 // Ignore not exist error
-func CopyFile(from, to string) error {
-	fromFile, err := os.Open(from)
+func CopyFile(src, dst string) error {
+	srcFile, err := os.Open(src)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return nil
 		}
-		return fmt.Errorf("failed to open %s: %w", from, err)
+		return fmt.Errorf("failed to open %s: %w", src, err)
 	}
-	defer fromFile.Close()
+	defer srcFile.Close()
 
 	// Make sure nested dir is exist before copying file
-	toDir := filepath.Dir(to)
-	if err := os.MkdirAll(toDir, os.ModePerm); err != nil {
-		return fmt.Errorf("failed to mkdir %s: %w", toDir, err)
+	dstDir := filepath.Dir(dst)
+	if err := os.MkdirAll(dstDir, os.ModePerm); err != nil {
+		return fmt.Errorf("failed to mkdir %s: %w", dstDir, err)
 	}
 
-	toFile, err := os.Create(to)
+	dstFile, err := os.Create(dst)
 	if err != nil {
-		return fmt.Errorf("failed to create %s: %w", to, err)
+		return fmt.Errorf("failed to create %s: %w", dst, err)
 	}
-	defer toFile.Close()
+	defer dstFile.Close()
 
-	if _, err := io.Copy(toFile, fromFile); err != nil {
-		return fmt.Errorf("failed to copy from %s to %s: %w", from, to, err)
+	if _, err := io.Copy(dstFile, srcFile); err != nil {
+		return fmt.Errorf("failed to copy from %s to %s: %w", src, dst, err)
 	}
 
 	return nil
 }
 
-// Copy dir from -> to
+// Copy dir from src -> to dst
 // Ignore not exist error
-func CopyDir(from, to string) error {
-	if err := os.MkdirAll(to, os.ModePerm); err != nil {
-		return fmt.Errorf("failed to mkdir %s: %w", to, err)
+func CopyDir(src, dst string) error {
+	if err := os.MkdirAll(dst, os.ModePerm); err != nil {
+		return fmt.Errorf("failed to mkdir %s: %w", dst, err)
 	}
 
-	files, err := os.ReadDir(from)
+	files, err := os.ReadDir(src)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return nil
 		}
 
-		return fmt.Errorf("failed to read dir %s: %w", from, err)
+		return fmt.Errorf("failed to read dir %s: %w", src, err)
 	}
 
 	for _, file := range files {
-		newFrom := filepath.Join(from, file.Name())
-		newTo := filepath.Join(to, file.Name())
+		tempSrc := filepath.Join(src, file.Name())
+		tempDst := filepath.Join(dst, file.Name())
 
 		if file.IsDir() {
-			if err := CopyDir(newFrom, newTo); err != nil {
+			if err := CopyDir(tempSrc, tempDst); err != nil {
 				return err
 			}
 
 			continue
 		}
 
-		if err := CopyFile(newFrom, newTo); err != nil {
+		if err := CopyFile(tempSrc, tempDst); err != nil {
 			return err
 		}
 	}
