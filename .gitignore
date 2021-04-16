@@ -1,8 +1,16 @@
 # macOS
 .DS_Store
 
+# Window
+*.exe
+
 # IntelliJ
 .idea/
 
 # VSCode
 .vscode/
+
+# Node
+node_modules/
+package.json
+package-lock.json
