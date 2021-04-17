@@ -26,6 +26,10 @@ func Copy(src, dst string) error {
 		return fmt.Errorf("failed to trim ~ for dst %s", dst)
 	}
 
+	return rawCopy(src, dst)
+}
+
+func rawCopy(src, dst string) error {
 	fileInfo, err := os.Stat(src)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
