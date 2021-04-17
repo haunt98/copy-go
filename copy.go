@@ -19,7 +19,7 @@ func Copy(src, dst string) error {
 		return fmt.Errorf("failed to trim ~ for src %s", src)
 	}
 
-	dst, err = trimHomeSymbol(src)
+	dst, err = trimHomeSymbol(dst)
 	if err != nil {
 		return fmt.Errorf("failed to trim ~ for dst %s", dst)
 	}
