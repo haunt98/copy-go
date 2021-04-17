@@ -7,11 +7,13 @@ import (
 )
 
 func main() {
-	if err := copy.CopyFile("copy.go", "copy.go_cloned"); err != nil {
+	// Copy file
+	if err := copy.Copy("copy.go", "copy.go_cloned"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := copy.CopyDir("example", "example_cloned"); err != nil {
+	// Copy dir
+	if err := copy.Copy("example", "example_cloned"); err != nil {
 		fmt.Println(err)
 	}
 }
