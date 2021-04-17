@@ -9,6 +9,10 @@ import (
 	"path/filepath"
 )
 
+const (
+	homeSymbol = '~'
+)
+
 // Copy src to dst
 // do nothing if src not exist
 func Copy(src, dst string) error {

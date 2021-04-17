@@ -5,10 +5,6 @@ import (
 	"os"
 )
 
-const (
-	homeSymbol = '~'
-)
-
 // Replace dst with src
 func Replace(src, dst string) error {
 	src, err := trimHomeSymbol(src)
