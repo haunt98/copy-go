@@ -11,12 +11,12 @@ const (
 
 // ReplaceFile remove file in dst and replace with file in src
 func ReplaceFile(src, dst string) error {
-	return replace(src, dst, CopyFile)
+	return replace(src, dst, copyFile)
 }
 
 // ReplaceDir remove dir in dst and replace with dir src
 func ReplaceDir(src, dst string) error {
-	return replace(src, dst, CopyDir)
+	return replace(src, dst, copyDir)
 }
 
 // replace dst with src

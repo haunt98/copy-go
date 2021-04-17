@@ -34,11 +34,11 @@ func Copy(src, dst string) error {
 	}
 
 	if fileInfo.IsDir() {
-		if err := CopyDir(src, dst); err != nil {
+		if err := copyDir(src, dst); err != nil {
 			return fmt.Errorf("failed to copy dir from src %s to dst %s: %w", src, dst, err)
 		}
 	} else {
-		if err := CopyFile(src, dst); err != nil {
+		if err := copyFile(src, dst); err != nil {
 			return fmt.Errorf("failed to copy file from src %s to dst %s: %w", src, dst, err)
 		}
 	}
@@ -46,7 +46,7 @@ func Copy(src, dst string) error {
 	return nil
 }
 
-func CopyFile(src, dst string) error {
+func copyFile(src, dst string) error {
 	srcFile, err := os.Open(src)
 	if err != nil {
 		return fmt.Errorf("failed to open %s: %w", src, err)
@@ -72,7 +72,7 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
-func CopyDir(src, dst string) error {
+func copyDir(src, dst string) error {
 	if err := os.MkdirAll(dst, os.ModePerm); err != nil {
 		return fmt.Errorf("failed to mkdir %s: %w", dst, err)
 	}
@@ -87,11 +87,11 @@ func CopyDir(src, dst string) error {
 		dstChild := filepath.Join(dst, srcFile.Name())
 
 		if srcFile.IsDir() {
-			if err := CopyDir(srcChild, dstChild); err != nil {
+			if err := copyDir(srcChild, dstChild); err != nil {
 				return err
 			}
 		} else {
-			if err := CopyFile(srcChild, dstChild); err != nil {
+			if err := copyFile(srcChild, dstChild); err != nil {
 				return err
 			}
 		}
