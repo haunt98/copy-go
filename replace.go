@@ -3,8 +3,6 @@ package copy
 import (
 	"fmt"
 	"os"
-	"os/user"
-	"path/filepath"
 )
 
 const (
@@ -23,12 +21,12 @@ func ReplaceDir(src, dst string) error {
 
 // replace dst with src
 func replace(src, dst string, copyFn CopyFn) error {
-	replacedSrc, err := replaceHomeSymbol(src)
+	replacedSrc, err := trimHomeSymbol(src)
 	if err != nil {
 		return fmt.Errorf("failed to replace home symbol %s: %w", src, err)
 	}
 
-	replacedDst, err := replaceHomeSymbol(dst)
+	replacedDst, err := trimHomeSymbol(dst)
 	if err != nil {
 		return fmt.Errorf("failed to replace home symbol %s: %w", dst, err)
 	}
@@ -42,20 +40,4 @@ func replace(src, dst string, copyFn CopyFn) error {
 	}
 
 	return nil
-}
-
-// replaceHomeSymbol replace ~ with full path
-// https://stackoverflow.com/a/17609894
-func replaceHomeSymbol(path string) (string, error) {
-	if path == "" || path[0] != homeSymbol {
-		return path, nil
-	}
-
-	currentUser, err := user.Current()
-	if err != nil {
-		return "", err
-	}
-
-	newPath := filepath.Join(currentUser.HomeDir, path[1:])
-	return newPath, nil
 }
