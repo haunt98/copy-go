@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v0.5.0 (2021-04-17)
+
+### Added
+
+- feat: use single Copy and Replace for both file and dir (#2) (2021-04-17)
+
+- feat: add ReplaceFile and ReplaceDir (#1) (2021-04-17)
+
+### Others
+
+- chore(readme): add install (2021-04-17)
+
+- chore(example): add example for Replace (2021-04-17)
+
+- chore: update go in github action (2021-04-17)
+
+- chore: update gitignore (2021-04-17)
+
+- chore(changelog): generate v0.4.0 (2021-03-17)
+
 ## v0.4.0 (2021-3-17)
 
 ### Added
