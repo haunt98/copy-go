@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+type CopyFn func(src, dst string) error
+
 // Copy file from src (source) -> to dst (destination)
 // Ignore not exist error
 func CopyFile(src, dst string) error {
