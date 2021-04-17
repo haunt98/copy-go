@@ -9,8 +9,6 @@ import (
 	"path/filepath"
 )
 
-type CopyFn func(src, dst string) error
-
 // Copy src to dst
 // do nothing if src not exist
 func Copy(src, dst string) error {

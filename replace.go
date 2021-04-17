@@ -9,34 +9,24 @@ const (
 	homeSymbol = '~'
 )
 
-// ReplaceFile remove file in dst and replace with file in src
-func ReplaceFile(src, dst string) error {
-	return replace(src, dst, copyFile)
-}
-
-// ReplaceDir remove dir in dst and replace with dir src
-func ReplaceDir(src, dst string) error {
-	return replace(src, dst, copyDir)
-}
-
-// replace dst with src
-func replace(src, dst string, copyFn CopyFn) error {
-	replacedSrc, err := trimHomeSymbol(src)
+// Replace dst with src
+func Replace(src, dst string) error {
+	src, err := trimHomeSymbol(src)
 	if err != nil {
-		return fmt.Errorf("failed to replace home symbol %s: %w", src, err)
+		return fmt.Errorf("failed to trim ~ for src %s", src)
 	}
 
-	replacedDst, err := trimHomeSymbol(dst)
+	dst, err = trimHomeSymbol(dst)
 	if err != nil {
-		return fmt.Errorf("failed to replace home symbol %s: %w", dst, err)
+		return fmt.Errorf("failed to trim ~ for dst %s", dst)
 	}
 
-	if err := os.RemoveAll(replacedDst); err != nil {
-		return fmt.Errorf("failed to remove %s: %w", replacedDst, err)
+	if err := os.RemoveAll(dst); err != nil {
+		return fmt.Errorf("failed to remove dst %s: %w", dst, err)
 	}
 
-	if err := copyFn(replacedSrc, replacedDst); err != nil {
-		return fmt.Errorf("failed to copy from %s to %s: %w", replacedSrc, replacedDst, err)
+	if err := Copy(src, dst); err != nil {
+		return fmt.Errorf("failed to copy from src %s to dst %s: %w", src, dst, err)
 	}
 
 	return nil
