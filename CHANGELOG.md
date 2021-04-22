@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v0.6.0 (2021-04-22)
+
+### Added
+
+- feat: add compare (#3) (2021-04-22)
+
+### Others
+
+- chore(readme): add Compare (2021-04-22)
+
+- chore(changelog): generate v0.5.0 (2021-04-17)
+
 ## v0.5.0 (2021-04-17)
 
 ### Added
