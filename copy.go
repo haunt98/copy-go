@@ -18,12 +18,12 @@ const (
 func Copy(src, dst string) error {
 	src, err := trimHomeSymbol(src)
 	if err != nil {
-		return fmt.Errorf("failed to trim ~ for src %s", src)
+		return fmt.Errorf("failed to trim ~ src %s", src)
 	}
 
 	dst, err = trimHomeSymbol(dst)
 	if err != nil {
-		return fmt.Errorf("failed to trim ~ for dst %s", dst)
+		return fmt.Errorf("failed to trim ~ dst %s", dst)
 	}
 
 	return copyRaw(src, dst)
@@ -41,11 +41,11 @@ func copyRaw(src, dst string) error {
 
 	if fileInfo.IsDir() {
 		if err := copyDir(src, dst); err != nil {
-			return fmt.Errorf("failed to copy dir from src %s to dst %s: %w", src, dst, err)
+			return fmt.Errorf("failed to copy dir src %s dst %s: %w", src, dst, err)
 		}
 	} else {
 		if err := copyFile(src, dst); err != nil {
-			return fmt.Errorf("failed to copy file from src %s to dst %s: %w", src, dst, err)
+			return fmt.Errorf("failed to copy file src %s dst %s: %w", src, dst, err)
 		}
 	}
 
@@ -72,7 +72,7 @@ func copyFile(src, dst string) error {
 	defer dstFile.Close()
 
 	if _, err := io.Copy(dstFile, srcFile); err != nil {
-		return fmt.Errorf("failed to copy from %s to %s: %w", src, dst, err)
+		return fmt.Errorf("failed to copy src %s dst %s: %w", src, dst, err)
 	}
 
 	return nil
