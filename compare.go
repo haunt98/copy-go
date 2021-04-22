@@ -2,27 +2,47 @@ package copy
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"os"
 
 	"github.com/pkg/diff"
 )
 
-func Compare(src, dst string) error {
+func Compare(src, dst string) (string, error) {
 	src, err := trimHomeSymbol(src)
 	if err != nil {
-		return fmt.Errorf("failed to trim ~ for src %s", src)
+		return "", fmt.Errorf("failed to trim ~ for src %s", src)
 	}
 
 	dst, err = trimHomeSymbol(dst)
 	if err != nil {
-		return fmt.Errorf("failed to trim ~ for dst %s", dst)
+		return "", fmt.Errorf("failed to trim ~ for dst %s", dst)
 	}
 
 	return compareRaw(src, dst)
 }
 
-func compareRaw(src, dst string) error {
-	return nil
+func compareRaw(src, dst string) (string, error) {
+	fileInfo, err := os.Stat(src)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return "", nil
+		}
+
+		return "", fmt.Errorf("failed to stat src %s: %w", src, err)
+	}
+
+	if fileInfo.IsDir() {
+		return "", fmt.Errorf("currently not support compare dir")
+	} else {
+		result, err := compareFile(src, dst)
+		if err != nil {
+			return "", fmt.Errorf("failed to compare file src %s dst %s: %w", src, dst, err)
+		}
+
+		return result, nil
+	}
 }
 
 func compareFile(src, dst string) (string, error) {
