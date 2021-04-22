@@ -9,6 +9,8 @@ import (
 	"github.com/pkg/diff"
 )
 
+// Compare src with dst
+// return error if src is dir not file
 func Compare(src, dst string) (string, error) {
 	src, err := trimHomeSymbol(src)
 	if err != nil {
