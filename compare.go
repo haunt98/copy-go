@@ -8,6 +8,20 @@ import (
 )
 
 func Compare(src, dst string) error {
+	src, err := trimHomeSymbol(src)
+	if err != nil {
+		return fmt.Errorf("failed to trim ~ for src %s", src)
+	}
+
+	dst, err = trimHomeSymbol(dst)
+	if err != nil {
+		return fmt.Errorf("failed to trim ~ for dst %s", dst)
+	}
+
+	return compareRaw(src, dst)
+}
+
+func compareRaw(src, dst string) error {
 	return nil
 }
 

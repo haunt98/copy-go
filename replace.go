@@ -22,7 +22,7 @@ func Replace(src, dst string) error {
 		return fmt.Errorf("failed to remove dst %s: %w", dst, err)
 	}
 
-	if err := rawCopy(src, dst); err != nil {
+	if err := copyRaw(src, dst); err != nil {
 		return fmt.Errorf("failed to copy from src %s to dst %s: %w", src, dst, err)
 	}
 
