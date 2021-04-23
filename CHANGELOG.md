@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v0.7.0 (2021-04-23)
+
+### Added
+
+- feat: add color when compare, straight to stdout (#4) (2021-04-23)
+
+### Others
+
+- chore(changelog): generate v0.6.0 (2021-04-22)
+
 ## v0.6.0 (2021-04-22)
 
 ### Added
